@@ -4,6 +4,7 @@ const connection = require('../connection');
 const router = express.Router();
 
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 router.post('/signup', (req, res) => {
@@ -60,4 +61,48 @@ router.post('/login', (req, res) => {
     })
 
 })
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    secure: 'true',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
+})
+
+router.post('/forgotPassword', (req, res) =>{
+    const user = req.body;
+    query = "select email, password from user where email=?";
+    connection.query(query, [user.email], (err, results) =>{
+        if (!err){
+            if (results.length <= 0)
+            {
+                return res.status(200).json({message:"Password send successfully to your email hahah."});
+            }
+            else{
+                var mailOptions = {
+                    from: process.env.EMAIL,
+                    to: results[0].email,
+                    subject: 'Password by Cafe Managemenet System',
+                    html: '<p><b>Your login details for Cafe Management System</b><br>' + results[0].email+'<br><b>' + results[0].password+ '</b></p>' + '<a href="http://localhost:4200/user/login">Login</a>'
+                };
+                transporter.sendMail(mailOptions, function(error, info ){
+                    if (error){
+                        console.log(error);
+                    }
+                    else{
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+                return res.status(200).json({message:"Password send successfully to your email."})
+            }
+
+        }
+        else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
 module.exports = router;
