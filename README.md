@@ -2,21 +2,21 @@
 A full-working restaurant application, using nodejs and MySql and Express
 
 
-1- Package installation
-2- .Env file content
-//Server
-PORT = 8080
+1- Package installation<br>
+2- .Env file content<br>
+//Server<br>
+PORT = 8080<br>
 
-//Connection
-DB_PORT = 3306
-DB_HOST = localhost
-DB_USERNAME = root
-DB_PASSWORD = password
-DB_NAME = cafenodejs
+//Connection<br>
+DB_PORT = 3306<br>
+DB_HOST = localhost<br>
+DB_USERNAME = root<br>
+DB_PASSWORD = password<br>
+DB_NAME = cafenodejs<br>
 
-ACCESS+TOKEN = token
+ACCESS_TOKEN = token<br>
 
-3- How to generate token
-in terminal type node
-then
-require('crypto').randomBytes(64).toString('hex')
+3- How to generate token<br>
+in terminal type node<br>
+then<br>
+require('crypto').randomBytes(64).toString('hex')<br>
