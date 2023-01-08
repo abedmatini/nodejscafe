@@ -22,4 +22,9 @@ then<br>
 require('crypto').randomBytes(64).toString('hex')<br>
 
 4- How to install a package<br>
-npm install --save jasonwebtoken nodemailer
+npm install --save jasonwebtoken nodemailer <br>
+
+
+5- Useful website for development<br>
+jwt.io<br>
+postman.com<br>
