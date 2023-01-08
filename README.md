@@ -20,3 +20,6 @@ ACCESS_TOKEN = token<br>
 in terminal type node<br>
 then<br>
 require('crypto').randomBytes(64).toString('hex')<br>
+
+4- How to install a package<br>
+npm install --save jasonwebtoken nodemailer
