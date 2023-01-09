@@ -71,38 +71,74 @@ var transporter = nodemailer.createTransport({
     }
 })
 
-router.post('/forgotPassword', (req, res) =>{
+router.post('/forgotPassword', (req, res) => {
     const user = req.body;
     query = "select email, password from user where email=?";
-    connection.query(query, [user.email], (err, results) =>{
-        if (!err){
-            if (results.length <= 0)
-            {
-                return res.status(200).json({message:"Password send successfully to your email hahah."});
+    connection.query(query, [user.email], (err, results) => {
+        if (!err) {
+            if (results.length <= 0) {
+                return res.status(200).json({ message: "Password send successfully to your email hahah." });
             }
-            else{
+            else {
                 var mailOptions = {
                     from: process.env.EMAIL,
                     to: results[0].email,
                     subject: 'Password by Cafe Managemenet System',
-                    html: '<p><b>Your login details for Cafe Management System</b><br>' + results[0].email+'<br><b>' + results[0].password+ '</b></p>' + '<a href="http://localhost:4200/user/login">Login</a>'
+                    html: '<p><b>Your login details for Cafe Management System</b><br>' + results[0].email + '<br><b>' + results[0].password + '</b></p>' + '<a href="http://localhost:4200/user/login">Login</a>'
                 };
-                transporter.sendMail(mailOptions, function(error, info ){
-                    if (error){
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
                         console.log(error);
                     }
-                    else{
+                    else {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                return res.status(200).json({message:"Password send successfully to your email."})
+                return res.status(200).json({ message: "Password send successfully to your email." })
             }
 
         }
-        else{
+        else {
             return res.status(500).json(err);
         }
     })
+})
+
+router.get('/get', (req, res) => {
+    var query = "select id, name, email, contactNumber, status from user where role='user'";
+    connection.query(query, (err, results) => {
+        if (!err) {
+            return res.status(200).json(results);
+        }
+        else {
+            return res.status(500).json(err);
+        }
+    })
+})
+
+router.patch('/update', (req, res) => {
+    let user = req.body;
+    var query = 'update user set status=? where id=?';
+    connection.query(query, [user.status, user.id], (err, results) => {
+        if (!err) {
+            if (results.affectedRow == 0) {
+                return res.status(404).json({ message: "User id does not exist" });
+            }
+            return res.status(200).json({ message: "User updated successfully" });
+        }
+        else {
+            return res.status(500).json(err);
+        }
+    })
+})
+
+router.get('/checkToken', (req, res) => {
+    return res.status(200).json({ message: "true" });
+})
+
+
+router.post('/changePassword', (req, response) => {
+    //const
 })
 
 module.exports = router;
