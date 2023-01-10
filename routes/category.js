@@ -1,6 +1,4 @@
-const { query } = require('express');
 const express = require('express');
-const { connect } = require('../connection');
 const connection = require('../connection');
 const router = express.Router();
 
