@@ -28,3 +28,7 @@ npm install --save jasonwebtoken nodemailer <br>
 5- Useful website for development<br>
 jwt.io<br>
 postman.com<br>
+
+
+productDetails example for running API<br>
+[{\"id\": 1, \"name\": \"Black Coffe\", \"price\": 99, \"total\": 99, \"category\": \"Coffee\", \"quantity\": \"1\"}]<br>
